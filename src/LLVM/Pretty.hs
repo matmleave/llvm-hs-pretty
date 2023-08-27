@@ -51,7 +51,7 @@ import qualified Data.ByteString.Short as SBF
 import qualified Data.ByteString.Lazy.Char8 as BF
 import Data.ByteString.Lazy (fromStrict)
 import Data.ByteString.Internal (w2c)
-import Data.Text.Prettyprint.Doc
+import Data.Text.Prettyprint.Doc hiding ((<+>))
 import qualified Data.Text.Prettyprint.Doc as P
 import Data.Text.Prettyprint.Doc.Render.Text
 
@@ -73,6 +73,8 @@ import Control.Monad.ST
 -------------------------------------------------------------------------------
 -- Utils
 -------------------------------------------------------------------------------
+(<+>) :: Doc ann -> Doc ann -> Doc ann
+(<+>) x y = if (show (x <> y)) == show y then y else (if (show (x <> y)) == show x then x else x <> space <> y)
 
 parensIf ::  Bool -> Doc ann -> Doc ann
 parensIf True = parens
