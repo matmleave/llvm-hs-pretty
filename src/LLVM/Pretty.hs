@@ -1293,7 +1293,10 @@ phiIncoming :: (Operand, Name) -> Doc ann
 phiIncoming (op, nm) = brackets (pretty op `cma` (local' (pretty nm)))
 
 ppShuffleMask :: [Int32] -> Doc ann
-ppShuffleMask m = pretty (typeOf m) <+> ("<" <+> (commas $ fmap (ppTyped . (ConstantOperand . C.Int 32 . fromIntegral)) m) <+> ">")
+ppShuffleMask m = 
+  pt <+> ("<" <+> (commas $ fmap (ppTyped . (ConstantOperand . C.Int 32 . fromIntegral)) m) <+> ">")
+  where
+    pt = brackets $ pretty (length m) <+> "x" <+> "i32"
 
 ppParams :: (a -> Doc ann) -> ([a], Bool) -> Doc ann
 ppParams ppParam (ps, varrg) = parens . commas $ fmap ppParam ps ++ vargs
